@@ -1,5 +1,4 @@
-from Bio import Phylo
-
+from ete3 import PhyloTree
 
 class Parser:
     def __init__(self, newick):
@@ -8,7 +7,8 @@ class Parser:
             print ("Wrong format. Please try again.")
         else:
             print("Format ok.")
-            Phylo.draw(newick)
+            tree = PhyloTree(newick)
+            print(tree)
 
     def checkcorrection(self, newick):
         print("found")
@@ -18,7 +18,7 @@ class Parser:
             if i == '(':
                 brackets = brackets + 1
             elif i == ')':
-                if brackets <= 0:
+                if brackets <= 0 or i - 1 == "(":
                     return False
                 brackets = brackets - 1
         if brackets is not 0 or not newick.strip().endswith(';'):

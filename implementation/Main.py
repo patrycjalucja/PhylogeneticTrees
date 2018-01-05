@@ -1,4 +1,4 @@
-from implementation import Parser, FileParser
+from implementation import Parser, FileParser, RandomTreeGenerator
 
 """BEWARE: if you want to draw a tree, don't forget about ';' at the end of input."""
 
@@ -16,8 +16,10 @@ def functionality(option):
         newick = input("Please enter your input in newick format.")
         p = Parser.Parser(newick)
     elif option.lower() == 'help':
-        # todo
         print("This is help.")
+        # TODO
+    elif option.lower() == 'r':
+        p = RandomTreeGenerator.RandomTreeGenerator()
     else:
         print("Need help? Type 'help'.")
         option = input()
