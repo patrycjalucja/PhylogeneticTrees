@@ -18,7 +18,7 @@ class Parser:
             if i == '(':
                 brackets = brackets + 1
             elif i == ')':
-                if brackets <= 0 or i - 1 == "(":
+                if brackets <= 0:
                     return False
                 brackets = brackets - 1
         if brackets is not 0 or not newick.strip().endswith(';'):
