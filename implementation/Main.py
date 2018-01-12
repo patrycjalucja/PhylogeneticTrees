@@ -11,7 +11,9 @@ newick = ""
 def functionality(option):
     if option.lower() == 'file':
         dir = input("Enter directory and name of your file.")
-        p = FileParser.FileParser(dir)
+        opt = input(
+            "Type 's' if you want only to save your file without displaying. Type whatever if you just want to display the tree.")
+        p = FileParser.FileParser(dir, opt)
     elif option.lower() == 'console':
         newick = input("Please enter your input in newick format.")
         p = Parser.Parser(newick)

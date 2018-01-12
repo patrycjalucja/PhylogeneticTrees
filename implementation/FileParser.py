@@ -1,15 +1,20 @@
 from Bio import Phylo
+from implementation import Phylol
 
 
 class FileParser:
-    def __init__(self, newick):
+    def __init__(self, newick, option):
         print("Checking format correction...")
         if not self.checkcorrection(newick):
             print("Wrong format. Please try again.")
         else:
             print("Format ok.")
             tree = Phylo.read(newick, "newick")
-            Phylo.draw(tree)
+            if option == 's':
+                Phylol.draw(tree, do_show=False)
+                print("File is saved in this directory and its name is tree.png.")
+            else:
+                Phylol.draw(tree)
 
     def checkcorrection(self, location):
         brackets = 0

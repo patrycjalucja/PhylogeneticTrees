@@ -11,7 +11,6 @@ class Parser:
             print(tree)
 
     def checkcorrection(self, newick):
-        print("found")
         brackets = 0
         print(newick)
         for i in newick:
