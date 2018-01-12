@@ -1,14 +1,22 @@
 from ete3 import PhyloTree
+import tempfile
+from Bio import Phylo
+from implementation import Phylol
+
 
 class Parser:
-    def __init__(self, newick):
+    def __init__(self, newick, option):
         print("Checking format correction...")
         if not self.checkcorrection(newick):
+            print("wrong newick: ", newick)
             print ("Wrong format. Please try again.")
         else:
             print("Format ok.")
-            tree = PhyloTree(newick)
-            print(tree)
+            if option == 'p':
+                tree = PhyloTree(newick)
+                print(tree)
+            else:
+                self.parse(newick, "none")
 
     def checkcorrection(self, newick):
         brackets = 0
@@ -24,3 +32,15 @@ class Parser:
             print(brackets)
             return False
         return True
+
+    def parse(self, listofnodes, option):
+        file = tempfile.TemporaryFile(mode='w+')
+        file.write(listofnodes)
+        file.seek(0)
+        tree = Phylo.read(file, "newick")
+        if option == 's':
+            Phylol.draw(tree, do_show=False)
+            print("File is saved in this directory and its name is tree.png.")
+        else:
+            Phylol.draw(tree)
+        file.close()

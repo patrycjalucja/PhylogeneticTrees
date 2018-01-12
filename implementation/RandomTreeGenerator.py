@@ -1,8 +1,6 @@
 import numpy as np
 import re
-import tempfile
-from Bio import Phylo
-
+from implementation import Parser
 
 class RandomTreeGenerator:
     def length(obj):
@@ -54,8 +52,7 @@ class RandomTreeGenerator:
             listofnodes = re.sub(':0.\d+;\Z', ';', listofnodes)
         return listofnodes
 
-
-    def __init__(self):
+    def __init__(self, option):
         size = np.random.random_integers(2, 10)
         listofnodes = []
         for i in range(0, size):
@@ -87,9 +84,4 @@ class RandomTreeGenerator:
                 listofnodes += l[j]
         listofnodes = RandomTreeGenerator.replace(self, listofnodes)
         print("listofnodes", listofnodes)
-        file = tempfile.TemporaryFile(mode='w+')
-        file.write(listofnodes)
-        file.seek(0)
-        tree = Phylo.read(file, "newick")
-        Phylo.draw(tree)
-        file.close()
+        Parser.Parser.parse(self, listofnodes, option)
