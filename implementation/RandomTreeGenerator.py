@@ -1,5 +1,7 @@
 import numpy as np
-from implementation import Parser
+import re
+import tempfile
+from Bio import Phylo
 
 
 class RandomTreeGenerator:
@@ -37,27 +39,49 @@ class RandomTreeGenerator:
             listofnodes.append(t)
         numberofbrackets = np.random.random_integers(0, size - 2)
         listofnodes = str(listofnodes)
+        previousplace = []
         if numberofbrackets < 0: numberofbrackets = 0
-        print("nob", numberofbrackets)
+        print("number of brackets: ", numberofbrackets)
         for i in range(0, numberofbrackets):
             l = listofnodes.split(',')
             place, endplace = RandomTreeGenerator.values(l)
-            l[place] = '(' + l[place] + ','
-            if l[endplace].endswith(','): l[endplace] = l[endplace][:-1]
-            l[endplace] = l[endplace] + '),'
-            listofnodes = l[0] + ','
-            for j in range(1, l.__len__()):
-                if l[j].endswith('}') or l[j].endswith('} ') or l[j].endswith(')'):
-                    l[j] += ','
-                listofnodes += l[j]
-            listofnodes.replace("[,+]", ",")
-            listofnodes.replace("(),", "")
+            iter = 0
+            while [place, endplace] in previousplace or place + 1 == endplace or [i[0] + 1 == endplace for i in
+                                                                                  previousplace]:
+                place, endplace = RandomTreeGenerator.values(l)
+                iter += 1
+                if iter == 3:
+                    break
+            if iter < 3:
+                previousplace.append([place, endplace])
+                l[place] = '(' + l[place] + ','
+                if l[endplace].endswith(','): l[endplace] = l[endplace][:-1]
+                l[endplace] = l[endplace] + ')'
+                listofnodes = l[0] + ','
+                for j in range(1, l.__len__()):
+                    if l[j].endswith('}') or l[j].endswith('} '):
+                        l[j] += ','
+                    if l[j].endswith(")"):
+                        l[j] += ":" + str(np.random.random_sample())
+                        l[j] += ","
+                    listofnodes += l[j]
+                listofnodes = re.sub(",+", ",", listofnodes)
+                listofnodes = listofnodes.replace("(),", "")
 
         if listofnodes.endswith(','): listofnodes = listofnodes[:-1]
         listofnodes = listofnodes + ";"
-        listofnodes = listofnodes.replace("{", '(')
+        listofnodes = listofnodes.replace("{", '')
         listofnodes = listofnodes.replace("[", '(')
-        listofnodes = listofnodes.replace("}", ')')
+        listofnodes = listofnodes.replace("}", '')
         listofnodes = listofnodes.replace("]", ')')
+        listofnodes = listofnodes.replace("'", "")
+        listofnodes = ''.join(listofnodes.split())
+        if re.search(':0.\d+;\Z', listofnodes):
+            listofnodes = re.sub(':0.\d+;\Z', ';', listofnodes)
         print("listofnodes", listofnodes)
-        z = Parser.Parser(listofnodes)
+        file = tempfile.TemporaryFile(mode='w+')
+        file.write(listofnodes)
+        file.seek(0)
+        tree = Phylo.read(file, "newick")
+        Phylo.draw(tree)
+        file.close()
