@@ -7,8 +7,7 @@ from implementation import Phylol
 class Parser:
     def __init__(self, newick, option):
         print("Checking format correction...")
-        if not self.checkcorrection(newick):
-            print("wrong newick: ", newick)
+        if not self.check_correction(newick):
             print ("Wrong format. Please try again.")
         else:
             print("Format ok.")
@@ -18,7 +17,7 @@ class Parser:
             else:
                 self.parse(newick, "none")
 
-    def checkcorrection(self, newick):
+    def check_correction(self, newick):
         brackets = 0
         print(newick)
         for i in newick:
