@@ -1,7 +1,7 @@
 from ete3 import PhyloTree
 import tempfile
 from Bio import Phylo
-from implementation import Phylol
+import Phylol
 
 
 class Parser:

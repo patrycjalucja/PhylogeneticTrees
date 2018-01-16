@@ -1,11 +1,11 @@
 from Bio import Phylo
-from implementation import Phylol
+import Phylol
 
 
 class FileParser:
     def __init__(self, newick, option):
         print("Checking format correction...")
-        if not self.checkcorrection(newick):
+        if not self.check_correction(newick):
             print("Wrong format. Please try again.")
         else:
             print("Format ok.")
@@ -16,7 +16,7 @@ class FileParser:
             else:
                 Phylol.draw(tree)
 
-    def checkcorrection(self, location):
+    def check_correction(self, location):
         brackets = 0
         with open(location) as file:
             newick = file.read()
