@@ -14,6 +14,9 @@ class Parser:
             if option == 'p':
                 tree = PhyloTree(newick)
                 print(tree)
+            elif option == 's':
+                name = input("Enter name for your file")
+                self.parse(newick, option, name)
             else:
                 self.parse(newick, "none")
 
@@ -32,14 +35,14 @@ class Parser:
             return False
         return True
 
-    def parse(self, listofnodes, option):
+    def parse(self, listofnodes, option, title="tree"):
         file = tempfile.TemporaryFile(mode='w+')
         file.write(listofnodes)
         file.seek(0)
         tree = Phylo.read(file, "newick")
         if option == 's':
-            Phylol.draw(tree, do_show=False)
-            print("File is saved in this directory and its name is tree.png.")
+            Phylol.draw(title, tree, do_show=False)
+            print("File is saved in this directory and its name is " + title + ".png")
         else:
-            Phylol.draw(tree)
+            Phylol.draw("Tree", tree)
         file.close()

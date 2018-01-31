@@ -11,10 +11,10 @@ class FileParser:
             print("Format ok.")
             tree = Phylo.read(newick, "newick")
             if option == 's':
-                Phylol.draw(tree, do_show=False)
-                print("File is saved in this directory and its name is tree.png.")
+                Phylol.draw(newick, tree, do_show=False)
+                print("File is saved in this directory and its name is same as in xml format.")
             else:
-                Phylol.draw(tree)
+                Phylol.draw(newick, tree)
 
     def check_correction(self, location):
         brackets = 0
@@ -27,7 +27,7 @@ class FileParser:
                 if brackets <= 0:
                     return False
                 brackets = brackets - 1
-        if brackets is not 0 or not newick.strip().endswith(';'):
+        if brackets is not 0 or not newick.strip().replace(" ", "").endswith(';'):
             print(brackets)
             return False
         return True

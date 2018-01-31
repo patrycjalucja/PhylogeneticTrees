@@ -47,7 +47,7 @@ class RandomTree:
                     list_of_nodes = list_of_nodes[:i + 1] + ":" + str(np.random.random_sample()) + list_of_nodes[i + 1:]
         return list_of_nodes
 
-    def __init__(self):
+    def __init__(self, option):
         size = np.random.random_integers(4, 50)
         list_of_nodes = []
         for i in range(0, size):
@@ -60,4 +60,4 @@ class RandomTree:
             "]", ")")
         list_of_nodes = RandomTree.add_lengths(self, list_of_nodes) + ";"
         list_of_nodes = list_of_nodes.replace(" ", "")
-        p = Parser(list_of_nodes, "os")
+        p = Parser(list_of_nodes, option)

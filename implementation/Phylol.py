@@ -8,14 +8,14 @@ Third-party libraries are loaded when the corresponding function is called.
 """
 """BEWARE: THIS CODE IS A PART OF OFFICIAL BIOPYTHON LIBRARY AND CAN BE FOUND HERE:
 https://github.com/biopython/biopython/blob/master/Bio/Phylo/_utils.py#L537
-IT JUST NEEDED TWO ADDITIONAL LINES OF CODE FOR MY STUDENT PROJECT PURPOSES."""
+IT JUST NEEDED A COUPLE OF ADDITIONAL LINES FOR MY STUDENT PROJECT PURPOSES."""
 
 from Bio import MissingPythonDependencyError
 
 
-def draw(tree, label_func=str, do_show=True, show_confidence=True,
+def draw(title, tree, label_func=str, do_show=True, show_confidence=True,
          # For power users
-         axes=None, branch_labels=None, label_colors=None, *args, **kwargs):
+         axes=None, branch_labels=None, label_colors=None, **kwargs):
     """Plot the given tree using matplotlib (or pylab).
     The graphic is a rooted tree, drawn with roughly the same algorithm as
     draw_ascii.
@@ -24,8 +24,8 @@ def draw(tree, label_func=str, do_show=True, show_confidence=True,
     pyplot_option_name=(tuple), pyplot_option_name=(tuple, dict), or
     pyplot_option_name=(dict).
     Example using the pyplot options 'axhspan' and 'axvline':
-    >>> Phylo.draw(tree, axhspan=((0.25, 7.75), {'facecolor':'0.5'}),
-    ...     axvline={'x':'0', 'ymin':'0', 'ymax':'1'})
+#    >>> Phylol.draw(title, tree, axhspan=((0.25, 7.75),  {'facecolor':'0.5'}),
+#    ...     axvline={'x':'0', 'ymin':'0', 'ymax':'1')
     Visual aspects of the plot can also be modified using pyplot's own functions
     and objects (via pylab or matplotlib). In particular, the pyplot.rcParams
     object can be used to scale the font size (rcParams["font.size"]) and line
@@ -151,7 +151,11 @@ def draw(tree, label_func=str, do_show=True, show_confidence=True,
     y_posns = get_y_positions(tree)
     # The function draw_clade closes over the axes object
     if axes is None:
-        fig = plt.figure()
+        if title is not None:  # MINE
+            fig = plt.figure(num=title)  # MINE
+        else:  # MINE
+            fig = plt.figure(num="Phylogenetic tree")  # MINE
+        plt.title('Phylogenetic tree')  # MINE
         axes = fig.add_subplot(1, 1, 1)
     elif not isinstance(axes, plt.matplotlib.axes.Axes):
         raise ValueError("Invalid argument for axes: %s" % axes)
@@ -246,8 +250,10 @@ def draw(tree, label_func=str, do_show=True, show_confidence=True,
             getattr(plt, str(key))(*value)
         elif (isinstance(value[0], tuple)):
             getattr(plt, str(key))(*value[0], **dict(value[1]))
-
     if do_show:
+        mng = plt.get_current_fig_manager()  # MINE
+        mng.resize(*mng.window.maxsize())  # MINE
         plt.show()
     else:  # THIS LINE IS MINE
-        plt.savefig("tree.png")  # THIS LINE IS MINE TOO.
+        title = title.replace(".xml", "")  # MINE
+        plt.savefig(title + ".png", dpi=600)  # THIS LINE IS MINE TOO.

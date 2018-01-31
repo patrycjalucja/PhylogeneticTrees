@@ -58,7 +58,7 @@ class Main:
                 opt = input(
                     "Type 's' if you want only to save your file without displaying. "
                     "Type whatever if you just want to display the tree.")
-                p = RandomTree()
+                p = RandomTree(opt)
                 option = ""
             elif option.lower() == 'q':
                 sys.exit()
