@@ -1,6 +1,6 @@
 from Parser import Parser
 from FileParser import FileParser
-from RandomTreeGenerator import RandomTreeGenerator
+from RandomTree import RandomTree
 import sys
 from optparse import OptionParser
 
@@ -28,7 +28,7 @@ class Main:
             else:
                 self.functionality(options.mode)
         elif options.mode == 'r':
-            RandomTreeGenerator(options.act)
+            RandomTree(options.act)
         else:
             option = input("Welcome to Phylogenetic Trees project. "
                            "Type 'file' if you want to import tree in newick format from file. "
@@ -58,7 +58,7 @@ class Main:
                 opt = input(
                     "Type 's' if you want only to save your file without displaying. "
                     "Type whatever if you just want to display the tree.")
-                p = RandomTreeGenerator(opt)
+                p = RandomTree()
                 option = ""
             elif option.lower() == 'q':
                 sys.exit()
