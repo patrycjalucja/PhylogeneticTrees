@@ -3,18 +3,18 @@ import Phylol
 
 
 class FileParser:
-    def __init__(self, newick, option):
+    def __init__(self, location, option):
         print("Checking format correction...")
-        if not self.check_correction(newick):
+        if not self.check_correction(location):
             print("Wrong format. Please try again.")
         else:
             print("Format ok.")
-            tree = Phylo.read(newick, "newick")
+            tree = Phylo.read(location, "newick")
             if option == 's':
-                Phylol.draw(newick, tree, do_show=False)
+                Phylol.draw(location, tree, do_show=False)
                 print("File is saved in this directory and its name is same as in xml format.")
             else:
-                Phylol.draw(newick, tree)
+                Phylol.draw(location, tree)
 
     def check_correction(self, location):
         brackets = 0

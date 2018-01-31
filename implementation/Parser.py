@@ -35,9 +35,9 @@ class Parser:
             return False
         return True
 
-    def parse(self, listofnodes, option, title="tree"):
+    def parse(self, list_of_nodes, option, title="tree"):
         file = tempfile.TemporaryFile(mode='w+')
-        file.write(listofnodes)
+        file.write(list_of_nodes)
         file.seek(0)
         tree = Phylo.read(file, "newick")
         if option == 's':

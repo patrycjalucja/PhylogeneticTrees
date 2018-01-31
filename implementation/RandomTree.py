@@ -48,7 +48,7 @@ class RandomTree:
         return list_of_nodes
 
     def __init__(self, option):
-        size = np.random.random_integers(4, 50)
+        size = np.random.random_integers(4, 80)
         list_of_nodes = []
         for i in range(0, size):
             distance = np.random.random_sample()
