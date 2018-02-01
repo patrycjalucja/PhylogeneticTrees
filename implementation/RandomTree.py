@@ -17,7 +17,6 @@ class RandomTree:
 
         return wrapper
 
-
     def split_list(l, minlen=2):
         if len(l) <= minlen:  # if the list is 2 or smaller,
             return l if len(l) > 1 else l[0]  # return the list, or its only element
