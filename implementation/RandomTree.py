@@ -17,14 +17,6 @@ class RandomTree:
 
         return wrapper
 
-    def check_for_duplicates(self, previous, place, end_place, nodes):
-        iter = 0
-        while [place, end_place] in previous or place + 1 == end_place or [i[0] + 1 == end_place for i in previous]:
-            place, end_place = RandomTree.values(self, nodes)
-            iter += 1
-            if iter == 3:
-                return False
-        return True
 
     def split_list(l, minlen=2):
         if len(l) <= minlen:  # if the list is 2 or smaller,
@@ -33,13 +25,6 @@ class RandomTree:
         return [RandomTree.split_list(l[:x], minlen), RandomTree.split_list(l[x:], minlen)]
 
     @retry(ValueError)
-    def values(self, l):
-        place = np.random.random_integers(0, l.__len__() - 1)
-        if place + 1 >= l.__len__() - 1:
-            raise ValueError
-        end_place = np.random.random_integers(place + 1, l.__len__() - 1)
-        return place, end_place
-
     def add_lengths(self, list_of_nodes):
         for j in range(0, 10):
             for i in range(0, list_of_nodes.__len__() - 1):
