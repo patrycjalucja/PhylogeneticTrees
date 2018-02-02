@@ -3,6 +3,7 @@ import tempfile
 from Bio import Phylo
 import Phylol
 
+"""Class which is responsible for handling console and RandomTree code"""
 
 class Parser:
     def __init__(self, newick, option):
