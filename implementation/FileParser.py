@@ -4,17 +4,20 @@ import Phylol
 
 class FileParser:
     def __init__(self, location, option):
-        print("Checking format correction...")
-        if not self.check_correction(location):
-            print("Wrong format. Please try again.")
-        else:
-            print("Format ok.")
-            tree = Phylo.read(location, "newick")
-            if option == 's':
-                Phylol.draw(location, tree, do_show=False)
-                print("File is saved in this directory and its name is same as in xml format.")
+        try:
+            print("Checking format correction...")
+            if not self.check_correction(location):
+                print("Wrong format. Please try again.")
             else:
-                Phylol.draw(location, tree)
+                print("Format ok.")
+                tree = Phylo.read(location, "newick")
+                if option == 's':
+                    Phylol.draw(location, tree, do_show=False)
+                    print("File is saved in this directory and its name is same as in xml format.")
+                else:
+                    Phylol.draw(location, tree)
+        except FileNotFoundError:
+            print("File not found.")
 
     def check_correction(self, location):
         brackets = 0
