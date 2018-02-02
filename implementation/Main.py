@@ -52,8 +52,12 @@ class Main:
                 p = Parser(newick, o)
                 option = ""
             elif option.lower() == 'help':
-                print("This is help.")
-                # TODO
+                print("- Type 'file' if you want to import tree in newick format from file. "
+                      "Then, after pressing enter, you will have to provide the path. \n"
+                      "- Type 'console' if you want to paste it to console.\n"
+                      "- Type 'r' if you want to generate random tree.\n"
+                      "- Press 'q' for exit.\n"
+                      "For more information read README.md.")
             elif option.lower() == 'r':
                 opt = input(
                     "Type 's' if you want only to save your file without displaying. "
