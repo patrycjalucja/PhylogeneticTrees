@@ -3,6 +3,7 @@ import Phylol
 
 """Class which is responsible for handling files with newick format"""
 
+
 class FileParser:
     def __init__(self, location, option):
         try:

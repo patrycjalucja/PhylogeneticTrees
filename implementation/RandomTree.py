@@ -4,6 +4,7 @@ from Parser import Parser
 
 """Class which generates random newick format and displays or saves it as png"""
 
+
 class RandomTree:
     def retry(exception):
         def wrapper(function):
